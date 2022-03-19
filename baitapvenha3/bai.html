@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Manager</title>
+    <script type="text/javascript">
+        var header='<table border="1"><tr><td>No</td><td>Name</td><td>Quantity</td><td>Price</td><td>Sub-total</td></tr>';
+        var data ='';
+        var footer ='</table>';
+        var total = 0;
+        var no = 1;
+        function productAdd(){
+            var path = document.frm_product;
+            var name = path.txt_name.value;
+            var quantity = path.txt_quantity.value;
+            var price = path.txt.price.value;
+            var sub_total = quantity*price;
+            total += sub_total;
+            var sub_data_one='<tr><td>'+no+'</td><td>'+name+'</td><td>'+price+'$</td><td>'+sub_total+ '$</td></tr>';
+            var sub_data_two = '<tr><td colspan="4">Total</td><td>'+total+'$</td></tr>';
+            data += sub_data_one;
+            document.getElementById('product_list').innerHTML = header+data+sub_data_two+footer;
+            no++;
+                }    
+    </script>
+</head>
+<body>
+    <h1>New Product</h1>
+    <hr>
+    <form name="frm">
+        <p>
+            <label>
+                Product Name
+                <input type="text" name="pname" id="pname">
+            </label>
+            <label>
+                Quantity
+                <input type="text" name="qty">
+            </label>
+        </p>
+        <p>
+            <label>
+                Unit Price
+                <input type="text" name="up">
+            </label>
+            <label>
+                Discount
+                <input type="text" name="dc" id="ds">
+            </label>
+
+        </p>
+
+        <p>
+            <button type="button" onclick="sell()">Sell</button>
+            <button type="button">Cancel</button>
+        </p>
+    </form>
+
+    <table id="tbl">
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Discount</th>
+            <th>Subtotal</th>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+
+        var id= 0;
+        function sell()
+        {
+            id++;
+            var pname =frm.pname.value;
+            var qty= frm.qty.value;
+            var price= frm.up.value;
+            var dc= frm.dc.value;
+            var sub= qty*price*(1-dc/100);
+            var row= "<tr>";
+                row +="<td>" + id + "</td>";
+                row += "<td>" + pname + "</td>";
+                row +=  "<td>$" + price + "</td>";
+                row += "<td>" + dc + "</td>";
+                row += "<td>$" + sub + "</td>";
+                row += "</tr>";
+                document.getElementById("tbl").innerHTML += row;
+            
+        }
+    </script>
+
+    <form name="frm_product" action="#" method="post">
+        Product Name: 
+        <input type="text" name="txt_name" value="">
+        Product Quantity:
+        <input type="text" name="txt_quantity" value="">
+        Product Price:
+        <input type="text" name="txt_price" value="">
+        <br>
+        <input type="button" onclick="productAdd();" value="Add">
+    </form>
+    <div id="product_list">&nbsp;</div>
+</body>
+</html>
